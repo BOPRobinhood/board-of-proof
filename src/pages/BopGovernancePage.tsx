@@ -1,0 +1,123 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { LoginDropdown } from '../components/LoginDropdown';
+import { ForumBoardsTable } from '../components/forum/ForumBoardsTable';
+import { useWallet } from '../contexts/WalletContext';
+import { useForumAccount } from '../hooks/useForumAccount';
+import { useBopProfile } from '../hooks/useBopProfile';
+import { apiUrl, describeForumApiFailure } from '../lib/apiBase';
+import { parseApiJson } from '../lib/parseApiJson';
+import type { ForumBoardRow } from '../types/forumBoards';
+
+const SECTION_DB = 'BOP GOVERNANCE';
+const SECTION_LABEL = 'BOP Governance';
+const BOARD_BASE = '/forums/bop-governance';
+
+const BopGovernancePage = () => {
+  const { publicKey } = useWallet();
+  const { isRegistered, profileLoading } = useBopProfile();
+  const { isAdmin, isModerator } = useForumAccount();
+  const showRegister = publicKey ? !profileLoading && !isRegistered : true;
+
+  const [boards, setBoards] = useState<ForumBoardRow[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
+    const q = publicKey ? `&wallet=${encodeURIComponent(publicKey)}` : '';
+    void fetch(apiUrl(`/api/forum/boards?section=${encodeURIComponent(SECTION_DB)}${q}`))
+      .then(async (r) => {
+        const j = await parseApiJson<{ boards?: ForumBoardRow[]; error?: string }>(r);
+        if (cancelled) return;
+        if (!r.ok) {
+          throw new Error(describeForumApiFailure(j.error, r.status));
+        }
+        setBoards(j.boards ?? []);
+      })
+      .catch((e) => {
+        if (!cancelled) {
+          setLoadError(e instanceof Error ? e.message : 'Failed to load');
+          setBoards([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [publicKey]);
+
+  return (
+    <div className="min-h-screen bg-white text-gray-900">
+      <div className="max-w-5xl mx-auto px-4 py-5 sm:px-6 sm:py-6">
+        <div
+          className="mb-4 flex flex-wrap items-center justify-between gap-3 text-sm"
+          style={{ fontFamily: 'Arial, sans-serif' }}
+        >
+          <Link to="/forums" className="text-blue-700 hover:text-blue-900 underline">
+            ← Back to forums
+          </Link>
+          <div className="flex items-center gap-2">
+            <LoginDropdown />
+            {showRegister ? (
+              <Link
+                to="/forums/register"
+                className="text-sm px-3 py-1.5 border border-gray-400 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-50"
+              >
+                Register
+              </Link>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="flex justify-center mb-4">
+          <img
+            src="/images/readmore.png"
+            alt=""
+            className="h-auto w-auto max-w-md sm:max-w-lg object-contain opacity-95"
+          />
+        </div>
+
+        <h1 className="section-header flex flex-wrap items-center gap-2" style={{ marginTop: 0 }}>
+          <span>{SECTION_LABEL}</span>
+        </h1>
+
+        <p className="text-sm text-gray-700 mb-4" style={{ fontFamily: 'Times New Roman, serif' }}>
+          Governance proposals, treasury moves, and protocol changes. Holders need at least 0.25% of
+          total supply (2,500,000 BOP).{' '}
+          {isAdmin || isModerator ? (
+            <span className="font-semibold text-gray-900">
+              Your account is an administrator or moderator—you can read and post here without meeting
+              that holding requirement.
+            </span>
+          ) : null}
+        </p>
+
+        {loading ? (
+          <p className="text-sm text-gray-600" style={{ fontFamily: 'Arial, sans-serif' }}>
+            Loading boards…
+          </p>
+        ) : null}
+        {loadError ? (
+          <p className="text-sm text-red-800 mb-4" style={{ fontFamily: 'Times New Roman, serif' }}>
+            {loadError}
+          </p>
+        ) : null}
+
+        {!loading && !loadError && boards.length > 0 ? (
+          <ForumBoardsTable boards={boards} boardLinkBase={BOARD_BASE} />
+        ) : null}
+
+        {!loading && !loadError && boards.length === 0 ? (
+          <p className="text-sm text-gray-600">No boards in this section yet.</p>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
+export default BopGovernancePage;
