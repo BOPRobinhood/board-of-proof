@@ -114,21 +114,29 @@ const BopIntro = () => {
         discoverable from the <strong>Liteboard Explorer</strong> by searching a contract address.
       </p>
 
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-3 not-prose">
-        <Link
-          to="/liteboard/deploy"
-          className="text-sm px-4 py-2 border border-gray-800 bg-white text-gray-900 hover:bg-gray-100 text-center no-underline inline-block"
+      <div className="mt-6 not-prose text-center">
+        <p
+          className="mb-2 text-xs uppercase tracking-[0.14em] text-gray-500"
           style={{ fontFamily: 'Arial, sans-serif' }}
         >
-          Deploy a Liteboard
-        </Link>
-        <Link
-          to="/liteboard/explorer"
-          className="text-sm px-4 py-2 border border-gray-400 bg-white text-blue-800 hover:bg-gray-50 text-center no-underline inline-block"
-          style={{ fontFamily: 'Arial, sans-serif' }}
-        >
-          Liteboard Explorer
-        </Link>
+          Coming soon
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 opacity-60 pointer-events-none">
+          <span
+            className="text-sm px-4 py-2 border border-gray-800 bg-white text-gray-900 text-center inline-block"
+            style={{ fontFamily: 'Arial, sans-serif' }}
+            aria-disabled="true"
+          >
+            Deploy a Liteboard
+          </span>
+          <span
+            className="text-sm px-4 py-2 border border-gray-400 bg-white text-blue-800 text-center inline-block"
+            style={{ fontFamily: 'Arial, sans-serif' }}
+            aria-disabled="true"
+          >
+            Liteboard Explorer
+          </span>
+        </div>
       </div>
     </section>
   );
