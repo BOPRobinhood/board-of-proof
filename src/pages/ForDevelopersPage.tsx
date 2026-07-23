@@ -6,6 +6,23 @@ import {
   githubRepoUrl,
 } from '../config/projectPublic';
 
+const btnClass =
+  'inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100';
+const btnStyle = { fontFamily: 'Arial, sans-serif' } as const;
+
+function BtnIcon({ src }: { src: string }) {
+  return (
+    <img
+      src={src}
+      alt=""
+      width={22}
+      height={22}
+      className="h-5 w-5 shrink-0 object-contain"
+      decoding="async"
+    />
+  );
+}
+
 const ForDevelopersPage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -44,20 +61,22 @@ const ForDevelopersPage = () => {
             />
             <span>For developers</span>
           </h1>
-          <p className="text-sm text-gray-700 mb-4" style={{ fontFamily: 'Times New Roman, serif' }}>
-            BOP is a wallet-native forum system designed for transparent governance and easy self-hosting.
-            The stack is React + Vite on frontend, Node + Express API, Supabase/Postgres for state, and
-            Robinhood Chain attestations relayed through a server fee payer.
+          <p
+            className="text-sm text-gray-700 mb-4 text-center max-w-2xl mx-auto"
+            style={{ fontFamily: 'Times New Roman, serif' }}
+          >
+            Want to run BOP yourself? Everything is open source — app, contracts, and NFT art.
+            Clone it, fill a few env vars, and you&apos;re on a local board.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <a
               href={githubRepoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
-              style={{ fontFamily: 'Arial, sans-serif' }}
+              className={btnClass}
+              style={btnStyle}
             >
-              <img src="/icons/done-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
+              <BtnIcon src="/icons/done-48.png" />
               App repo
             </a>
             {githubContractsRepoUrl ? (
@@ -65,9 +84,10 @@ const ForDevelopersPage = () => {
                 href={githubContractsRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
-                style={{ fontFamily: 'Arial, sans-serif' }}
+                className={btnClass}
+                style={btnStyle}
               >
+                <BtnIcon src="/icons/check-mark-48.png" />
                 Contracts repo
               </a>
             ) : null}
@@ -76,134 +96,89 @@ const ForDevelopersPage = () => {
                 href={githubNftsRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
-                style={{ fontFamily: 'Arial, sans-serif' }}
+                className={btnClass}
+                style={btnStyle}
               >
+                <BtnIcon src="/icons/image-file-48.png" />
                 NFT art repo
               </a>
             ) : null}
-            <Link
-              to="/forums/archive"
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
-              style={{ fontFamily: 'Arial, sans-serif' }}
-            >
-              <img src="/icons/evidence-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
+            <Link to="/forums/archive" className={btnClass} style={btnStyle}>
+              <BtnIcon src="/icons/evidence-48.png" />
               View archive & verify
             </Link>
-            <Link
-              to="/contracts"
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
-              style={{ fontFamily: 'Arial, sans-serif' }}
-            >
+            <Link to="/contracts" className={btnClass} style={btnStyle}>
+              <BtnIcon src="/icons/treasure-chest-48.png" />
               NFT &amp; vault safety
             </Link>
           </div>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Technical capabilities
+          <h2 className="text-base font-bold text-gray-900 mb-3" style={{ fontFamily: 'Arial, sans-serif' }}>
+            Want to try it yourself?
           </h2>
-          <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-800" style={{ fontFamily: 'Times New Roman, serif' }}>
-            <li>Forum boards with per-board rank gating for new threads and replies.</li>
-            <li>Wallet-signed actions for registration, posting, voting, profile updates, and PM send.</li>
-            <li>On-chain attestation relay for thread creation, replies, votes, and PM metadata on Robinhood Chain.</li>
-            <li>Archive + memo decoder flow to verify IDs/hashes against transaction data.</li>
-            <li>Public profile pages by username with forum activity and holdings data.</li>
-            <li>Encrypted private messages (client-side NaCl box), with metadata tx links and attestation status.</li>
-            <li>Admin CP for board policy tuning, role management, bans, and moderation operations.</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            On-chain flow (thread/reply/vote/PM)
-          </h2>
-          <div
-            className="border border-gray-300 bg-white p-3 text-sm text-gray-800"
+          <ol
+            className="list-decimal pl-5 space-y-4 text-sm text-gray-800"
             style={{ fontFamily: 'Times New Roman, serif' }}
           >
-            <p className="m-0 mb-2">
-              For signed user actions, frontend requests a wallet signature first. The API validates that signature,
-              writes forum state to Postgres, then creates compact attestation payloads. A server fee payer submits the
-              chain tx and stores status (`pending` / `failed` / `confirmed`) plus tx hash for auditability.
-            </p>
-            <p className="m-0">
-              This means forum content is readable from DB for UX speed, while hashes/metadata are externally verifiable
-              on-chain through the archive and decoder paths.
-            </p>
-          </div>
+            <li>
+              <strong>Clone the app</strong>
+              <pre className="mt-2 mb-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
+{`git clone https://github.com/BOPRobinhood/board-of-proof.git
+cd board-of-proof
+npm install`}
+              </pre>
+            </li>
+            <li>
+              <strong>Add secrets</strong> — copy <code>.env.example</code> → <code>.env</code>, then set at
+              least Supabase URL + service role key and your <code>OWNER_WALLET</code> (0x…).
+            </li>
+            <li>
+              <strong>Database</strong> — run the SQL scripts under <code>for_developers/sql/</code> in numeric
+              order against your Supabase project (see that folder&apos;s README).
+            </li>
+            <li>
+              <strong>Start locally</strong>
+              <pre className="mt-2 mb-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
+{`npm run dev`}
+              </pre>
+              Open <code>http://127.0.0.1:2000</code>, connect MetaMask, register a username.
+            </li>
+            <li>
+              <strong>Optional — ship it</strong> — run the API on a VPS (<code>npm start</code> + reverse
+              proxy), put the Vite build on Netlify, set <code>VITE_API_BASE</code> to your API HTTPS origin.
+              Notes live in <code>for_developers/deploy/</code>.
+            </li>
+          </ol>
         </section>
 
-        <section className="mb-8">
+        <section className="mb-8 border border-gray-300 bg-white p-4">
           <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Environment and key configuration
+            What you get
           </h2>
-          <div className="border border-gray-300 bg-white p-3 text-sm font-mono whitespace-pre-wrap">
-{`SUPABASE_URL=...
-SUPABASE_SERVICE_ROLE_KEY=...
-OWNER_WALLET=0x...
-BOP_TOKEN_ADDRESS=0x...
-ROBINHOOD_RPC_URL=https://...
-BOP_FORUM_ATTESTATION_ADDRESS=0x...
-ATTESTATION_RELAYER_PRIVATE_KEY=0x...`}
-          </div>
-          <p className="text-xs text-gray-600 mt-2 mb-0" style={{ fontFamily: 'Arial, sans-serif' }}>
-            The attestation relayer private key funds gas for on-chain forum events. Keep it server-only and never
-            expose it to the browser.
+          <p className="text-sm text-gray-800 m-0 mb-2" style={{ fontFamily: 'Times New Roman, serif' }}>
+            Wallet-native forum (boards, threads, votes, PMs), Robinhood Chain attestations for key
+            actions, NFT membership swap + dividend vault contracts, and an archive you can verify
+            against the chain.
           </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Production: static site + API (e.g. Netlify + Railway)
-          </h2>
-          <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-800" style={{ fontFamily: 'Times New Roman, serif' }}>
-            <li>
-              The <strong>API</strong> runs as a Node process (<code>npm start</code> → Express). Host it on Railway
-              (or any Node host); set the same server env vars as above. Use the <strong>public HTTPS</strong> API URL
-              (not internal-only hostnames).
-            </li>
-            <li>
-              The <strong>frontend</strong> is a Vite build (<code>dist/</code>). On Netlify, set{' '}
-              <code>VITE_API_BASE</code> to that API origin (<code>https://…</code>), scoped to <strong>builds</strong>,
-              and run <code>npm run build</code>. A prebuild step writes Netlify redirects so <code>/api</code> can
-              proxy to the API.
-            </li>
-            <li>
-              Full checklist: <code>for_developers/README.md</code> → section <em>Production hosting (Netlify + Railway)</em>.
-            </li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Bootstrap / runbook
-          </h2>
-          <div className="border border-gray-300 bg-white p-3 text-sm font-mono whitespace-pre-wrap">
-{`npm install
-copy .env.example .env
-# run SQL migrations in for_developers/sql in numeric order
-npm run dev`}
-          </div>
-          <p className="text-xs text-gray-600 mt-2 mb-0" style={{ fontFamily: 'Arial, sans-serif' }}>
-            If you changed API routes and a feature returns 404, restart the API/dev process to load latest handlers.
+          <p className="text-sm text-gray-800 m-0" style={{ fontFamily: 'Times New Roman, serif' }}>
+            Deeper docs stay in the repos — start with the app README, then{' '}
+            <code>for_developers/README.md</code> if you need routes and env details.
           </p>
         </section>
 
         <section>
           <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Documentation map
+            Minimum <code>.env</code>
           </h2>
-          <ul className="list-disc pl-5 space-y-1 text-sm text-gray-800" style={{ fontFamily: 'Times New Roman, serif' }}>
-            <li><code>README.md</code> — root quick start + homepage/current feature summary.</li>
-            <li>
-              <code>for_developers/README.md</code> — architecture, route/API catalog, and{' '}
-              <em>Production hosting (Netlify + Railway)</em>.
-            </li>
-            <li><code>for_developers/sql/README.md</code> — migration order and schema map.</li>
-            <li><code>server/index.mjs</code> — API source of truth and auth rules.</li>
-          </ul>
+          <pre className="border border-gray-300 bg-gray-50 px-3 py-2.5 text-[0.8125rem] font-mono whitespace-pre-wrap m-0 overflow-x-auto">
+{`SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+OWNER_WALLET=0x...
+ROBINHOOD_RPC_URL=https://...
+# optional later: BOP_TOKEN_ADDRESS, attestation contract + relayer key`}
+          </pre>
         </section>
       </div>
     </div>
