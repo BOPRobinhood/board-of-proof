@@ -6,5 +6,5 @@
   publish = "dist"
 
 [build.environment]
-  # Update to your production API origin (no trailing slash).
-  VITE_API_BASE = "https://your-api.up.railway.app"
+  # Production API origin (no trailing slash). Also used for /images/nfts/* art URLs.
+  VITE_API_BASE = "https://api.bop-rh.xyz"

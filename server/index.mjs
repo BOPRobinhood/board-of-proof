@@ -1079,6 +1079,7 @@ async function retryFailedOnchainAttestationsOnce(limit = 10) {
 }
 
 const app = express();
+app.set('trust proxy', 1);
 app.use(
   cors({
     origin: true,
@@ -1086,6 +1087,38 @@ app.use(
   })
 );
 app.use(express.json({ limit: '5mb' }));
+
+/** NFT art (1.png…500.png). Clone bop-nfts into public/images/nfts on the API host. */
+const NFT_IMAGES_DIR =
+  process.env.NFT_IMAGES_DIR?.trim() ||
+  join(__dirname, '..', 'public', 'images', 'nfts');
+app.use(
+  '/images/nfts',
+  express.static(NFT_IMAGES_DIR, {
+    fallthrough: true,
+    maxAge: '7d',
+    immutable: true,
+  })
+);
+
+function publicApiOrigin(req) {
+  const fromEnv = process.env.PUBLIC_API_ORIGIN?.trim().replace(/\/$/, '');
+  if (fromEnv) return fromEnv;
+  const proto = String(req.get('x-forwarded-proto') || req.protocol || 'http')
+    .split(',')[0]
+    .trim();
+  const host = String(req.get('x-forwarded-host') || req.get('host') || '')
+    .split(',')[0]
+    .trim();
+  if (!host) return '';
+  return `${proto}://${host}`;
+}
+
+function nftImagePublicUrl(req, tokenId) {
+  const origin = publicApiOrigin(req);
+  const path = `/images/nfts/${tokenId}.png`;
+  return origin ? `${origin}${path}` : path;
+}
 
 function uint8FromBase64(b64) {
   const buf = Buffer.from(b64, 'base64');
@@ -3475,7 +3508,7 @@ app.get('/api/reward-nfts', async (req, res) => {
       return {
         token_id: tokenId,
         name: `Proof #${String(tokenId).padStart(3, '0')}`,
-        image: `/images/nfts/${tokenId}.png`,
+        image: nftImagePublicUrl(req, tokenId),
         minted_at_unix: mintedAtUnix,
         mint_tx: meta?.txHash || null,
       };

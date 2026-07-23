@@ -1,0 +1,19 @@
+[Unit]
+Description=BOP API (Express)
+After=network.target
+
+[Service]
+Type=simple
+User=REPLACE_WITH_LINUX_USER
+WorkingDirectory=/opt/bop
+Environment=NODE_ENV=production
+# Secrets come from /opt/bop/.env (loaded by dotenv in server/index.mjs)
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+# Optional hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

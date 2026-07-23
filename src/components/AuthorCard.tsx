@@ -6,6 +6,7 @@ import {
   liteTokenMintDisplay,
   twitterProfileUrl,
 } from '../config/projectPublic';
+import { nftImageUrl } from '../lib/apiBase';
 
 function IconGitHub({ className }: { className?: string }) {
   return (
@@ -66,7 +67,7 @@ const AuthorCard = () => {
         <div className="author-photo-column">
           <div className="author-photo">
             <img
-              src="/images/nfts/121.png"
+              src={nftImageUrl(121)}
               alt="BOP"
               className="author-portrait"
             />

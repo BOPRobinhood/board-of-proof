@@ -17,6 +17,11 @@ export function apiUrl(path: string): string {
   return `${base}${p}`;
 }
 
+/** NFT art hosted on the API (`/images/nfts/{id}.png`). Uses VITE_API_BASE in production. */
+export function nftImageUrl(id: number | string): string {
+  return apiUrl(`/images/nfts/${id}.png`);
+}
+
 /**
  * When the boards API returns 404 `{ error: "Not found" }`, the path usually missed the
  * Express router (API not running, wrong host, or `/api/api/...` from mis-set VITE_API_BASE).

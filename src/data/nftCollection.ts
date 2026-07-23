@@ -1,11 +1,13 @@
 /**
  * BOP Reward NFT collection display data.
- * Art lives in `public/images/nfts/{id}.png` (1.png … 500.png).
+ * Art is served by the API from `public/images/nfts/{id}.png` (clone bop-nfts on the API host).
  */
+import { nftImageUrl } from '../lib/apiBase';
+
 export type NftCollectionItem = {
   id: number;
   name: string;
-  /** Public URL path */
+  /** Absolute or same-origin URL */
   image: string;
 };
 
@@ -15,7 +17,7 @@ function nftItem(id: number): NftCollectionItem {
   return {
     id,
     name: `Proof #${String(id).padStart(3, '0')}`,
-    image: `/images/nfts/${id}.png`,
+    image: nftImageUrl(id),
   };
 }
 
