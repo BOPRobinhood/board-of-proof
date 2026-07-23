@@ -114,29 +114,28 @@ const BopIntro = () => {
         discoverable from the <strong>Liteboard Explorer</strong> by searching a contract address.
       </p>
 
-      <div className="mt-6 not-prose text-center">
-        <p
-          className="mb-2 text-xs uppercase tracking-[0.14em] text-gray-500"
-          style={{ fontFamily: 'Arial, sans-serif' }}
+      <div
+        className="mt-6 not-prose flex flex-wrap items-center justify-center gap-3 pointer-events-none"
+        style={{ fontFamily: 'Arial, sans-serif' }}
+      >
+        <span
+          className="relative inline-block border border-gray-800 bg-white px-4 pb-2 pt-3 text-sm text-gray-900 text-center opacity-70"
+          aria-disabled="true"
         >
-          Coming soon
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 opacity-60 pointer-events-none">
-          <span
-            className="text-sm px-4 py-2 border border-gray-800 bg-white text-gray-900 text-center inline-block"
-            style={{ fontFamily: 'Arial, sans-serif' }}
-            aria-disabled="true"
-          >
-            Deploy a Liteboard
+          <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-1.5 text-[10px] font-bold tracking-wide text-red-600 whitespace-nowrap">
+            COMING SOON!
           </span>
-          <span
-            className="text-sm px-4 py-2 border border-gray-400 bg-white text-blue-800 text-center inline-block"
-            style={{ fontFamily: 'Arial, sans-serif' }}
-            aria-disabled="true"
-          >
-            Liteboard Explorer
+          Deploy a Liteboard
+        </span>
+        <span
+          className="relative inline-block border border-gray-400 bg-white px-4 pb-2 pt-3 text-sm text-blue-800 text-center opacity-70"
+          aria-disabled="true"
+        >
+          <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-1.5 text-[10px] font-bold tracking-wide text-red-600 whitespace-nowrap">
+            COMING SOON!
           </span>
-        </div>
+          Liteboard Explorer
+        </span>
       </div>
     </section>
   );

@@ -213,24 +213,30 @@ const ForumPage = () => {
           BOP forums
         </h1>
 
-        <div className="mb-6 text-center" style={{ fontFamily: 'Arial, sans-serif' }}>
-          <p className="mb-2 text-xs uppercase tracking-[0.14em] text-gray-500">Coming soon</p>
-          <div className="flex flex-wrap items-center justify-center gap-3 opacity-60 pointer-events-none">
-            <span
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-800 bg-white text-gray-900 text-center"
-              aria-disabled="true"
-            >
-              <img src="/icons/done-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
-              Deploy a Liteboard
+        <div
+          className="mb-6 flex flex-wrap items-center justify-center gap-3 pointer-events-none"
+          style={{ fontFamily: 'Arial, sans-serif' }}
+        >
+          <span
+            className="relative inline-flex items-center gap-2 border border-gray-800 bg-white px-4 pb-2 pt-3 text-sm text-gray-900 text-center opacity-70"
+            aria-disabled="true"
+          >
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-1.5 text-[10px] font-bold tracking-wide text-red-600 whitespace-nowrap">
+              COMING SOON!
             </span>
-            <span
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-400 bg-white text-blue-800 text-center"
-              aria-disabled="true"
-            >
-              <img src="/icons/evidence-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
-              Liteboard Explorer
+            <img src="/icons/done-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
+            Deploy a Liteboard
+          </span>
+          <span
+            className="relative inline-flex items-center gap-2 border border-gray-400 bg-white px-4 pb-2 pt-3 text-sm text-blue-800 text-center opacity-70"
+            aria-disabled="true"
+          >
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-1.5 text-[10px] font-bold tracking-wide text-red-600 whitespace-nowrap">
+              COMING SOON!
             </span>
-          </div>
+            <img src="/icons/evidence-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
+            Liteboard Explorer
+          </span>
         </div>
         <p
           className="mb-6 text-center text-xs text-gray-600 max-w-xl mx-auto"

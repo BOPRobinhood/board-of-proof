@@ -218,7 +218,10 @@ const ArchivePage = () => {
         {activeTab === 'verify' ? <MemoTxDecoder variant="archive" /> : null}
 
         {activeTab === 'archive' ? (
-          <h2 className="text-lg font-bold text-gray-900 mt-0 mb-2" style={{ fontFamily: 'Times New Roman, serif' }}>
+          <h2
+            className="bop-pixel-title text-gray-900 m-0 mb-2"
+            style={{ fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)' }}
+          >
             Attestation log
           </h2>
         ) : null}

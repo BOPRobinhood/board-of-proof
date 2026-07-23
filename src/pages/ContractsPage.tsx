@@ -203,11 +203,12 @@ const ContractsPage = () => {
           <div className="border border-gray-300 bg-white p-4 space-y-3">
             <Body className="space-y-3">
               <p className="m-0">
-                <strong>Not merged into the NFT.</strong> Rewards sit in their own vault. After $BOP
-                and the NFT are live, we deploy the vault, wire <InlineCode>setNft</InlineCode> /{' '}
-                <InlineCode>setVault</InlineCode> once, then fund the claim pool. Until that address
-                is published here, treat this section as the locked design you can already read in
-                source.
+                <strong>Not merged into the NFT.</strong> Rewards sit in their own vault. You can
+                deploy the vault <strong>before</strong> $BOP exists: NFT is passed in the
+                constructor; <InlineCode>setBopToken</InlineCode> is one-time after launch. NFT
+                owner calls <InlineCode>setVault</InlineCode> once. Then fund the claim pool with a
+                normal transfer. Until that address is published here, treat this section as the
+                locked design you can already read in source.
               </p>
               <p className="m-0 text-gray-600">Address: TBA (not deployed yet)</p>
               <ul className="list-disc pl-5 space-y-1.5 m-0">
@@ -220,9 +221,9 @@ const ContractsPage = () => {
                   cooldown <strong>3 hours</strong> per wallet.
                 </li>
                 <li>
-                  <strong>One-time wiring.</strong> <InlineCode>setNft</InlineCode> once (deployer);
-                  NFT <InlineCode>setVault</InlineCode> once (owner). Redeem on the NFT can clear
-                  claim cooldown state for that wallet.
+                  <strong>Deploy-before-token.</strong> Constructor takes the NFT; deployer{' '}
+                  <InlineCode>setBopToken</InlineCode> once when $BOP is live. NFT{' '}
+                  <InlineCode>setVault</InlineCode> once (owner). Redeem can clear claim cooldown.
                 </li>
               </ul>
             </Body>
@@ -247,7 +248,8 @@ payout = vaultBalance * nftBalance * 100
               </li>
               <li>Owner cannot pull escrowed $BOP or change the 400k rate after the token is set.</li>
               <li>
-                Vault (when live): deployer sets NFT once; there is no admin claim of the pool.
+                Vault (when live): NFT is fixed at deploy; deployer{' '}
+                <InlineCode>setBopToken</InlineCode> once; there is no admin claim of the pool.
               </li>
             </ul>
           </Body>

@@ -194,7 +194,10 @@ const RegisterPage = () => {
           </Link>
         </nav>
 
-        <h1 className="section-header" style={{ marginTop: 0 }}>
+        <h1
+          className="bop-pixel-title text-gray-900 mb-4"
+          style={{ marginTop: 0, fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}
+        >
           Register an account
         </h1>
 
@@ -214,10 +217,15 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        <ol className="space-y-6 list-decimal list-inside text-sm" style={{ fontFamily: 'Arial, sans-serif' }}>
-          <li className="pl-1">
-            <span className="font-semibold">Connect MetaMask</span>
-            <div className="register-step-card mt-2 ml-5 border border-gray-400 p-3 bg-gray-50">
+        <div className="space-y-6 text-sm" style={{ fontFamily: 'Arial, sans-serif' }}>
+          <div>
+            <h2
+              className="bop-pixel-title text-gray-900 m-0 mb-2"
+              style={{ fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)' }}
+            >
+              1. Connect MetaMask
+            </h2>
+            <div className="register-step-card border border-gray-400 p-3 bg-gray-50">
               {!publicKey ? (
                 <button
                   type="button"
@@ -236,11 +244,16 @@ const RegisterPage = () => {
                 </span>
               )}
             </div>
-          </li>
+          </div>
 
-          <li className="pl-1">
-            <span className="font-semibold">Sign message</span>
-            <div className="register-step-card mt-2 ml-5 border border-gray-400 p-3 bg-gray-50">
+          <div>
+            <h2
+              className="bop-pixel-title text-gray-900 m-0 mb-2"
+              style={{ fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)' }}
+            >
+              2. Sign message
+            </h2>
+            <div className="register-step-card border border-gray-400 p-3 bg-gray-50">
               <button
                 type="button"
                 onClick={() => void handleSign()}
@@ -254,11 +267,16 @@ const RegisterPage = () => {
                     : 'Sign message'}
               </button>
             </div>
-          </li>
+          </div>
 
-          <li className="pl-1">
-            <span className="font-semibold">Choose username</span>
-            <div className="register-step-card mt-2 ml-5 border border-gray-400 p-3 bg-gray-50">
+          <div>
+            <h2
+              className="bop-pixel-title text-gray-900 m-0 mb-2"
+              style={{ fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)' }}
+            >
+              3. Choose username
+            </h2>
+            <div className="register-step-card border border-gray-400 p-3 bg-gray-50">
               <label className="block text-xs text-gray-600 mb-1 shrink-0">
                 Username (3–20: letters, numbers, _)
               </label>
@@ -299,8 +317,8 @@ const RegisterPage = () => {
                 )}
               </div>
             </div>
-          </li>
-        </ol>
+          </div>
+        </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <button
