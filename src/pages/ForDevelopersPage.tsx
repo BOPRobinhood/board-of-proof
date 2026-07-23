@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import { LoginDropdown } from '../components/LoginDropdown';
-import { githubRepoUrl } from '../config/projectPublic';
+import {
+  githubContractsRepoUrl,
+  githubNftsRepoUrl,
+  githubRepoUrl,
+} from '../config/projectPublic';
 
 const ForDevelopersPage = () => {
   return (
@@ -54,8 +58,30 @@ const ForDevelopersPage = () => {
               style={{ fontFamily: 'Arial, sans-serif' }}
             >
               <img src="/icons/done-48.png" alt="" width={22} height={22} className="h-5 w-5 shrink-0 object-contain" decoding="async" />
-              Visit repo
+              App repo
             </a>
+            {githubContractsRepoUrl ? (
+              <a
+                href={githubContractsRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
+                style={{ fontFamily: 'Arial, sans-serif' }}
+              >
+                Contracts repo
+              </a>
+            ) : null}
+            {githubNftsRepoUrl ? (
+              <a
+                href={githubNftsRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"
+                style={{ fontFamily: 'Arial, sans-serif' }}
+              >
+                NFT art repo
+              </a>
+            ) : null}
             <Link
               to="/forums/archive"
               className="inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100"

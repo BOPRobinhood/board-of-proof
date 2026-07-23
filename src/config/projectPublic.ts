@@ -11,6 +11,10 @@ export interface ProjectPublicConfig {
   /** Deployed BopRewardNft (0x…). Empty / TBA until set. */
   bopRewardNftAddress?: string;
   githubRepoUrl: string;
+  /** Solidity contracts (vault, reward NFT, attestation). */
+  githubContractsRepoUrl?: string;
+  /** NFT collection art + metadata. */
+  githubNftsRepoUrl?: string;
   twitterProfileUrl: string;
 }
 
@@ -29,6 +33,10 @@ export const liteTokenMintDisplay =
 export const liteTokenMintCanCopy = liteTokenMintDisplay !== 'TBA';
 
 export const githubRepoUrl = (projectPublicConfig.githubRepoUrl ?? '').trim();
+export const githubContractsRepoUrl = (
+  projectPublicConfig.githubContractsRepoUrl ?? ''
+).trim();
+export const githubNftsRepoUrl = (projectPublicConfig.githubNftsRepoUrl ?? '').trim();
 export const twitterProfileUrl = (projectPublicConfig.twitterProfileUrl ?? '').trim();
 
 const nftRaw = (projectPublicConfig.bopRewardNftAddress ?? '').trim();

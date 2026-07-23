@@ -1,7 +1,12 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginDropdown } from '../components/LoginDropdown';
-import { bopRewardNftAddress, githubRepoUrl } from '../config/projectPublic';
+import {
+  bopRewardNftAddress,
+  githubContractsRepoUrl,
+  githubNftsRepoUrl,
+  githubRepoUrl,
+} from '../config/projectPublic';
 import { explorerAddressUrl, truncateWalletDisplay } from '../lib/explorer';
 
 const NFT_EXPLORER =
@@ -269,15 +274,42 @@ payout = vaultBalance * nftBalance * 100
                   </a>
                 </li>
               ) : null}
+              {githubContractsRepoUrl ? (
+                <li>
+                  Contracts source:{' '}
+                  <a
+                    href={githubContractsRepoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 underline"
+                  >
+                    BOPRobinhood/bop-contracts
+                  </a>
+                </li>
+              ) : null}
+              {githubNftsRepoUrl ? (
+                <li>
+                  NFT art &amp; metadata:{' '}
+                  <a
+                    href={githubNftsRepoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 underline"
+                  >
+                    BOPRobinhood/bop-nfts
+                  </a>
+                </li>
+              ) : null}
               {githubRepoUrl ? (
                 <li>
+                  Web app &amp; API:{' '}
                   <a
                     href={githubRepoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-700 underline"
                   >
-                    Project repo
+                    BOPRobinhood/board-of-proof
                   </a>
                 </li>
               ) : null}

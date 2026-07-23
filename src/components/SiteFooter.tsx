@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
-import { githubRepoUrl, twitterProfileUrl } from '../config/projectPublic';
+import {
+  githubContractsRepoUrl,
+  githubNftsRepoUrl,
+  githubRepoUrl,
+  twitterProfileUrl,
+} from '../config/projectPublic';
 
 const SiteFooter = () => {
   return (
@@ -44,8 +49,34 @@ const SiteFooter = () => {
             rel="noopener noreferrer"
             className="text-blue-700 hover:text-blue-900 underline"
           >
-            GitHub
+            App
           </a>
+          {githubContractsRepoUrl ? (
+            <>
+              <span className="text-gray-400">|</span>
+              <a
+                href={githubContractsRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-700 hover:text-blue-900 underline"
+              >
+                Solidity
+              </a>
+            </>
+          ) : null}
+          {githubNftsRepoUrl ? (
+            <>
+              <span className="text-gray-400">|</span>
+              <a
+                href={githubNftsRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-700 hover:text-blue-900 underline"
+              >
+                NFT art
+              </a>
+            </>
+          ) : null}
           <span className="text-gray-400">|</span>
           <a
             href={twitterProfileUrl}

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginDropdown } from '../components/LoginDropdown';
 import { useWallet } from '../contexts/WalletContext';
-import { githubRepoUrl } from '../config/projectPublic';
+import { githubNftsRepoUrl } from '../config/projectPublic';
 import { NFT_COLLECTION_SHOWCASE } from '../data/nftCollection';
 
 const SWAP_AMOUNT = 400_000;
@@ -391,16 +391,18 @@ const DividendsPage = () => {
             >
               The Collection
             </h2>
-            <a
-              href={githubRepoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 border border-gray-800 bg-white text-gray-900 hover:bg-gray-100 no-underline"
-              style={{ fontFamily: 'Arial, sans-serif' }}
-            >
-              <IconGitHub className="w-4 h-4 shrink-0" />
-              View on Git
-            </a>
+            {githubNftsRepoUrl ? (
+              <a
+                href={githubNftsRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm px-3 py-1.5 border border-gray-800 bg-white text-gray-900 hover:bg-gray-100 no-underline"
+                style={{ fontFamily: 'Arial, sans-serif' }}
+              >
+                <IconGitHub className="w-4 h-4 shrink-0" />
+                View on Git
+              </a>
+            ) : null}
           </div>
 
           <div className="space-y-4">
