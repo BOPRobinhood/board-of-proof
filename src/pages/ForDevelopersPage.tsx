@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginDropdown } from '../components/LoginDropdown';
 import {
@@ -9,6 +10,7 @@ import {
 const btnClass =
   'inline-flex items-center gap-2 text-sm px-4 py-2 border border-gray-700 bg-white text-blue-700 hover:text-blue-900 hover:bg-gray-100';
 const btnStyle = { fontFamily: 'Arial, sans-serif' } as const;
+const bodyStyle = { fontFamily: "'Times New Roman', Times, serif" } as const;
 
 function BtnIcon({ src }: { src: string }) {
   return (
@@ -20,6 +22,34 @@ function BtnIcon({ src }: { src: string }) {
       className="h-5 w-5 shrink-0 object-contain"
       decoding="async"
     />
+  );
+}
+
+function PixelTitle({
+  children,
+  className = '',
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <h2
+      className={`bop-pixel-title text-gray-900 mb-3 ${className}`}
+      style={{ marginTop: 0, fontSize: 'clamp(1.2rem, 2.8vw, 1.5rem)', lineHeight: 1.25 }}
+    >
+      {children}
+    </h2>
+  );
+}
+
+function StepTitle({ children }: { children: ReactNode }) {
+  return (
+    <h3
+      className="bop-pixel-title text-gray-900 m-0 mb-2"
+      style={{ fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)', lineHeight: 1.3 }}
+    >
+      {children}
+    </h3>
   );
 }
 
@@ -62,11 +92,12 @@ const ForDevelopersPage = () => {
             <span>For developers</span>
           </h1>
           <p
-            className="text-sm text-gray-700 mb-4 text-center max-w-2xl mx-auto"
-            style={{ fontFamily: 'Times New Roman, serif' }}
+            className="text-[1.0625rem] text-gray-800 mb-4 text-center max-w-2xl mx-auto leading-relaxed"
+            style={bodyStyle}
           >
-            Want to run BOP yourself? Everything is open source — app, contracts, and NFT art.
-            Clone it, fill a few env vars, and you&apos;re on a local board.
+            Want to run BOP yourself? The stack is open — React site, Express API, Supabase, and
+            Robinhood Chain contracts. Clone it, wire env + SQL, and you&apos;ve got a local board
+            with wallet login.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <a
@@ -114,71 +145,142 @@ const ForDevelopersPage = () => {
           </div>
         </section>
 
-        <section className="mb-8">
-          <h2 className="text-base font-bold text-gray-900 mb-3" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Want to try it yourself?
-          </h2>
-          <ol
-            className="list-decimal pl-5 space-y-4 text-sm text-gray-800"
-            style={{ fontFamily: 'Times New Roman, serif' }}
-          >
-            <li>
-              <strong>Clone the app</strong>
-              <pre className="mt-2 mb-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
+        <section className="mb-10">
+          <PixelTitle>Want to try it yourself?</PixelTitle>
+          <p className="text-[1.0625rem] text-gray-800 mb-6 leading-relaxed" style={bodyStyle}>
+            Five steps from zero to a running board. You need Node 20+, a free Supabase project, and
+            MetaMask on Robinhood Chain (or whatever RPC you point at).
+          </p>
+
+          <div className="space-y-6">
+            <div className="border border-gray-300 bg-white p-4">
+              <StepTitle>1. Clone the app</StepTitle>
+              <p className="text-sm text-gray-800 m-0 mb-3 leading-relaxed" style={bodyStyle}>
+                This repo is the website + API. Contracts and NFT art are separate repos if you want
+                to audit or fork those too.
+              </p>
+              <pre className="m-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
 {`git clone https://github.com/BOPRobinhood/board-of-proof.git
 cd board-of-proof
 npm install`}
               </pre>
-            </li>
-            <li>
-              <strong>Add secrets</strong> — copy <code>.env.example</code> → <code>.env</code>, then set at
-              least Supabase URL + service role key and your <code>OWNER_WALLET</code> (0x…).
-            </li>
-            <li>
-              <strong>Database</strong> — run the SQL scripts under <code>for_developers/sql/</code> in numeric
-              order against your Supabase project (see that folder&apos;s README).
-            </li>
-            <li>
-              <strong>Start locally</strong>
-              <pre className="mt-2 mb-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
+            </div>
+
+            <div className="border border-gray-300 bg-white p-4">
+              <StepTitle>2. Add secrets</StepTitle>
+              <p className="text-sm text-gray-800 m-0 mb-3 leading-relaxed" style={bodyStyle}>
+                Copy <code>.env.example</code> → <code>.env</code>. The service role key stays on the
+                server only — never put it in the Vite client.
+              </p>
+              <pre className="m-0 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono whitespace-pre-wrap overflow-x-auto">
+{`SUPABASE_URL=https://xxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=...
+OWNER_WALLET=0xYourMetaMaskAddress
+ROBINHOOD_RPC_URL=https://...
+# later: BOP_TOKEN_ADDRESS, BOP_FORUM_ATTESTATION_ADDRESS,
+#        ATTESTATION_RELAYER_PRIVATE_KEY`}
+              </pre>
+            </div>
+
+            <div className="border border-gray-300 bg-white p-4">
+              <StepTitle>3. Database</StepTitle>
+              <p className="text-sm text-gray-800 m-0 leading-relaxed" style={bodyStyle}>
+                In the Supabase SQL editor, run the scripts under <code>for_developers/sql/</code> in
+                numeric order (<code>001_</code>, <code>002_</code>, …). That creates profiles, forum
+                boards/threads, votes, PMs, attestations, and the rest. The folder README is the map.
+              </p>
+            </div>
+
+            <div className="border border-gray-300 bg-white p-4">
+              <StepTitle>4. Start locally</StepTitle>
+              <p className="text-sm text-gray-800 m-0 mb-3 leading-relaxed" style={bodyStyle}>
+                One command serves the React app and the Express API together.
+              </p>
+              <pre className="m-0 mb-3 border border-gray-300 bg-gray-50 px-3 py-2 text-[0.8125rem] font-mono overflow-x-auto">
 {`npm run dev`}
               </pre>
-              Open <code>http://127.0.0.1:2000</code>, connect MetaMask, register a username.
+              <p className="text-sm text-gray-800 m-0 leading-relaxed" style={bodyStyle}>
+                Open <code>http://127.0.0.1:2000</code> → connect MetaMask → Register. Your{' '}
+                <code>OWNER_WALLET</code> becomes admin after that first registration.
+              </p>
+            </div>
+
+            <div className="border border-gray-300 bg-white p-4">
+              <StepTitle>5. Optional — ship it</StepTitle>
+              <p className="text-sm text-gray-800 m-0 mb-2 leading-relaxed" style={bodyStyle}>
+                Production is two pieces: a Node API (<code>npm start</code>) behind Caddy/nginx on a
+                VPS, and a static Vite build on Netlify (or similar). Point{' '}
+                <code>VITE_API_BASE</code> at your API HTTPS origin so the site can call{' '}
+                <code>/api/…</code> and load NFT gallery images from the API host.
+              </p>
+              <p className="text-sm text-gray-800 m-0 leading-relaxed" style={bodyStyle}>
+                Checklist and systemd notes: <code>for_developers/deploy/</code> in the app repo.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-10 border border-gray-300 bg-white p-5">
+          <PixelTitle>What you get</PixelTitle>
+          <ul className="list-disc pl-5 space-y-2 text-[1.0625rem] text-gray-800 m-0 leading-relaxed" style={bodyStyle}>
+            <li>
+              <strong>Forum</strong> — sections &amp; boards, markdown threads, votes, rank gates,
+              encrypted PMs, admin tools.
             </li>
             <li>
-              <strong>Optional — ship it</strong> — run the API on a VPS (<code>npm start</code> + reverse
-              proxy), put the Vite build on Netlify, set <code>VITE_API_BASE</code> to your API HTTPS origin.
-              Notes live in <code>for_developers/deploy/</code>.
+              <strong>Wallet identity</strong> — MetaMask sign-in; $BOP balance can show under posts
+              once the token address is set.
             </li>
-          </ol>
+            <li>
+              <strong>On-chain receipts</strong> — compact attestations for threads / replies / votes /
+              PM metadata, with an{' '}
+              <Link to="/forums/archive" className="text-blue-700 underline">
+                Archive &amp; verify
+              </Link>{' '}
+              flow.
+            </li>
+            <li>
+              <strong>Membership NFTs</strong> — 400k $BOP ↔ 1 Proof NFT (max 500), plus a separate
+              dividend vault design. Safety notes:{' '}
+              <Link to="/contracts" className="text-blue-700 underline">
+                Contracts
+              </Link>
+              .
+            </li>
+            <li>
+              <strong>Liteboards</strong> — per-token mini-forums you can deploy from the app for other
+              ERC-20 communities.
+            </li>
+          </ul>
         </section>
 
-        <section className="mb-8 border border-gray-300 bg-white p-4">
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            What you get
-          </h2>
-          <p className="text-sm text-gray-800 m-0 mb-2" style={{ fontFamily: 'Times New Roman, serif' }}>
-            Wallet-native forum (boards, threads, votes, PMs), Robinhood Chain attestations for key
-            actions, NFT membership swap + dividend vault contracts, and an archive you can verify
-            against the chain.
-          </p>
-          <p className="text-sm text-gray-800 m-0" style={{ fontFamily: 'Times New Roman, serif' }}>
-            Deeper docs stay in the repos — start with the app README, then{' '}
-            <code>for_developers/README.md</code> if you need routes and env details.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-bold text-gray-900 mb-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-            Minimum <code>.env</code>
-          </h2>
-          <pre className="border border-gray-300 bg-gray-50 px-3 py-2.5 text-[0.8125rem] font-mono whitespace-pre-wrap m-0 overflow-x-auto">
-{`SUPABASE_URL=...
-SUPABASE_SERVICE_ROLE_KEY=...
-OWNER_WALLET=0x...
-ROBINHOOD_RPC_URL=https://...
-# optional later: BOP_TOKEN_ADDRESS, attestation contract + relayer key`}
-          </pre>
+        <section className="mb-8">
+          <PixelTitle>Where to dig deeper</PixelTitle>
+          <ul className="list-disc pl-5 space-y-1.5 text-sm text-gray-800 m-0" style={bodyStyle}>
+            <li>
+              <code>README.md</code> — quick start at the repo root
+            </li>
+            <li>
+              <code>for_developers/README.md</code> — architecture, routes, env catalog
+            </li>
+            <li>
+              <code>for_developers/sql/README.md</code> — migration order
+            </li>
+            <li>
+              <code>for_developers/deploy/</code> — VPS / Caddy / systemd notes
+            </li>
+            <li>
+              <a
+                href={githubContractsRepoUrl || githubRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-700 underline"
+              >
+                bop-contracts
+              </a>{' '}
+              — Solidity sources &amp; Hardhat tests
+            </li>
+          </ul>
         </section>
       </div>
     </div>
