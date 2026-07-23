@@ -26,8 +26,8 @@ function SpecCard({
         {label}
       </p>
       <h3
-        className="text-lg font-bold text-gray-900 mb-2"
-        style={{ fontFamily: 'Arial, sans-serif' }}
+        className="bop-pixel-title text-gray-900 mb-2"
+        style={{ marginTop: 0, fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', lineHeight: 1.25 }}
       >
         {title}
       </h3>
@@ -80,8 +80,8 @@ function DividendFlowDiagram() {
   return (
     <div className="border border-gray-400 bg-gray-50 p-4 sm:p-6 overflow-x-auto">
       <p
-        className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-4 text-center"
-        style={{ fontFamily: 'Arial, sans-serif' }}
+        className="bop-pixel-title text-gray-900 mb-4 text-center"
+        style={{ marginTop: 0, fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: 1.25 }}
       >
         Flow
       </p>
@@ -231,8 +231,8 @@ const HowDividendsWorkPage = () => {
           >
             <div className="rounded-md bg-white border border-gray-200 p-4 shadow-inner">
               <p
-                className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mb-2"
-                style={{ fontFamily: 'Arial, sans-serif' }}
+                className="bop-pixel-title text-gray-900 mb-2"
+                style={{ marginTop: 0, fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', lineHeight: 1.25 }}
               >
                 Claim formula
               </p>
