@@ -110,7 +110,7 @@ const DividendsPage = () => {
           </h1>
 
           <div
-            className="text-sm text-gray-700 space-y-3 leading-relaxed"
+            className="text-sm text-gray-700 space-y-3 leading-relaxed text-center max-w-3xl mx-auto"
             style={{ fontFamily: 'Times New Roman, serif' }}
           >
             <p className="m-0">
